@@ -1,7 +1,11 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function getSeason(d) {
-  if(Object.prototype.toString.call(d) !== '[object Date]') return 'Unable to determine the time of year!'
+  if (!d) return 'Unable to determine the time of year!'
+  if (!(d instanceof Date) && isNaN(d.getMonth)) {
+    console.log(d)
+    throw new Error()
+  }
   let r = ''
   switch(d.getMonth()) {
     case 11 :
@@ -22,7 +26,8 @@ module.exports = function getSeason(d) {
     case 8 :
     case 9 :
     case 10 :
-      r = 'autumn' 
+      r = 'autumn'
+      break
   }
   return r
 };
